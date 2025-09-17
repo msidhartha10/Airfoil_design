@@ -67,16 +67,26 @@ y_c =
 
 ```math
 \theta = \arctan\!\left(\frac{dy_c}{dx}\right)
+````
+
+```math
+x_u = x - y_t \sin(\theta)
 ```
 
 ```math
-x_u = x - y_t \sin(\theta) \\
-y_u = y_c + y_t \cos(\theta) \\
-x_l = x + y_t \sin(\theta) \\
+y_u = y_c + y_t \cos(\theta)
+```
+
+```math
+x_l = x + y_t \sin(\theta)
+```
+
+```math
 y_l = y_c - y_t \cos(\theta)
 ```
 
 ---
+
 
 ## 🚀 Usage
 
@@ -101,8 +111,8 @@ This will:
 ## 📊 Example Plot
 
 ### NACA 5420 (Chord = 180 mm)
+<img src="naca5420.png" alt="Example Airfoil" width="50%" />
 
-![Example Airfoil](docs/naca5420.png)
 
 ---
 
