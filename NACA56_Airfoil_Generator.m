@@ -10,7 +10,6 @@
 % - Thickness distribution uses classic NACA 4-digit polynomial with a
 %   selectable trailing edge: open (-0.1015) or closed (-0.1036).
 %
-% By: Copilot
 % MATLAB R2019b+ recommended (uses writetable). For older versions, switch to xlswrite.
 
 clear; clc;
