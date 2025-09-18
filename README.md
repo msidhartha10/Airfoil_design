@@ -54,6 +54,27 @@ y_c =
 \frac{2m}{(1-p)^2}(p - x), & x ≥ p
 \end{cases}
 ```
+---
+### Surface Coordinates
+
+```math
+\theta = \arctan\!\left(\frac{dy_c}{dx}\right)
+```
+
+```math
+x_u = x - y_t \sin(\theta)
+```
+```math
+y_u = y_c + y_t \cos(\theta)
+```
+```math
+x_l = x + y_t \sin(\theta)
+```
+```math
+y_l = y_c - y_t \cos(\theta)
+```
+
+
 
 ---
 
@@ -92,47 +113,49 @@ For reflexed camber, a cubic subtraction is added near the trailing edge.
 - Next digits: additional camber or pressure recovery (not handled in classic script)
 - Last two digits: thickness as % chord (`t`)
 
-**In this script:**  
-6-series airfoils are generated as symmetric (mean camber = 0) due to their complex pressure recovery definitions.  
-Thickness uses the same NACA formula as above.
+#### Equations
 
----
-
-### Surface Coordinates
+The 6-series defines the mean line by specifying the chordwise position of minimum pressure at a given lift coefficient. The mean line is derived using inverse methods (not fully implemented in this script).
+In this script 6-series airfoils are generated as symmetric (mean camber = 0) due to their complex pressure recovery definitions.  
+However, the thickness distribution is the same as the 4- and 5-series:
 
 ```math
-\theta = \arctan\!\left(\frac{dy_c}{dx}\right)
+y_t = 5t \left( 0.2969 \sqrt{x} - 0.1260 x - 0.3516 x^2 + 0.2843 x^3 + a_4 x^4 \right)
+```
+
+In simplified form (as implemented in this code), the mean camber line is assumed zero (symmetric):
+
+```math
+y_c = 0, \quad \frac{dy_c}{dx} = 0
+```
+
+so the surfaces reduce to:
+
+```math
+x_u = x, \quad y_u = +y_t
 ```
 
 ```math
-x_u = x - y_t \sin(\theta)
+x_l = x, \quad y_l = -y_t
 ```
-```math
-y_u = y_c + y_t \cos(\theta)
-```
-```math
-x_l = x + y_t \sin(\theta)
-```
-```math
-y_l = y_c - y_t \cos(\theta)
-```
+
+For true 6-series airfoils, the pressure recovery and camber distribution require iterative solution methods described in Abbott & von Doenhoff.
 
 ---
 
 ## 🚀 Usage
 
 ```matlab
-c = 180;  % Chord length in mm
+c = 180;                           % Chord length in mm
 
-% Generate a NACA 23012 (5-digit) airfoil with 201 points, closed trailing edge
-[xu, yu, xl, yl, xc, yc] = airfoil_5digit('23012', linspace(0, c, 201), c, 'closed');
+% 299 total points, so 149 upper, 149 lower, 1 at LE (shared)
+[xu, yu, xl, yl, x, yc] = generate_naca4_airfoil('5420',c, 299, true);
 ```
 
 ---
 
 ## 📊 Example Plot
 
----
 ### NACA 5420 (Chord = 180 mm)
 <img src="naca5420.png" alt="Example Airfoil" width="50%" />
 
@@ -144,7 +167,6 @@ c = 180;  % Chord length in mm
 NACA_Airfoil_Generator/
 ├── generate_naca4_airfoil.m
 ├── NACA56_Airfoil_Generator.m   % 5/6 digit generator
-├── example.m
 ├── README.md
 └── LICENSE
 ```
