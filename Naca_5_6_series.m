@@ -1,5 +1,4 @@
 % NACA 5 and 6 Series Airfoil Plot Generator with Cosine Spacing and Excel Export
-% By: Copilot
 % Requirements: MATLAB, xlswrite (built-in), or writematrix (newer MATLAB)
 
 clear; clc;
